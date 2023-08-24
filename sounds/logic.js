@@ -6,6 +6,7 @@ var c=document.querySelector('canvas')
 		var tp=0
 		var cor=0
 		var cdown=0
+        var fx; var fy;
 		powerups=[]
 		var tothealth=400
 		var s=3; var x=100; var y=100; var dx=0; var dy=0; var dir=1; var health=400; var lives=true; var num=1; var firepower=5; var kills=0; var rep=false; var ki=0; var counter=0; var power='none'; var timel=counter/33
@@ -326,7 +327,14 @@ function preventEnemyCollisions() {
             powerups[cor].make()
             drawplayer()
             firebullets()
+            fx=x; fy=y
             x+=dx; y+=dy
+            if(x+4*s>600 || x-4*s<0){
+                x=fx
+            }
+            if(y+4*s>600 || y-4*s<0){
+                y=fy
+            }
             dx=0; dy=0;
             if(rep){
             	num+=1; for(var i=0; i<num; i++){
