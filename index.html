@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        button{
+            height: 50px;
+            width: 100px;
+            background-color: green;
+            border: 1px solid black;
+        }
+    #instructions{
+            visibility: hidden;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main menu</title>
+</head>
+<body>
+    <main>
+        <a href="./sounds/game.html"><button>Start Game</button></a>
+        <p></p>
+        <button onclick="document.getElementById('instructions').style.visibility='visible'">instructions</button>
+        <div id="instructions">
+        <p>controls <b>up, down, left and right</b> are keyboard keys, <b>w,s,a and d</b> respectively. click l to shoot</p>
+        <p>there are three types of power ups</p>
+        <p>The one shot kill: Kills opponents with one hit</p>
+        <p>The refill health: refills your health</p>
+        <p>The reversal: reverses damage to your opponent that shoots you</p>
+        <p>Your goal is to get as much kills as possible. have fun playing :></p>
+
+        </div>
+    </main>
+</body>
+</html>
