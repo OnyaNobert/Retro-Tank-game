@@ -383,7 +383,7 @@ function preventEnemyCollisions() {
         })
         but3.addEventListener('mousedown', event=>{
             makebullet();
-	var aud=document.getElementById('mousedown')
+	var aud=document.getElementById('sound')
 	aud.loop=true; aud.currentTime=3000
 aud.play(); aud.loop=false
         })
