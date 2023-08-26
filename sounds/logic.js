@@ -1,3 +1,4 @@
+var dir=3; 
 var c=document.querySelector('canvas')
 		c.width=600;
 		c.height=600
@@ -7,9 +8,9 @@ var c=document.querySelector('canvas')
 		var cor=0
 		var cdown=0
         var fx; var fy;
-		powerups=[]
+		var powerups=[]
 		var tothealth=400
-		var s=3; var x=100; var y=100; var dx=0; var dy=0; var dir=1; var health=400; var lives=true; var num=1; var firepower=5; var kills=0; var rep=false; var ki=0; var counter=0; var power='none'; var timel=counter/33
+		var s=3; var x=100; var y=100; var dx=0; var dy=0; var health=400; var lives=true; var num=1; var firepower=5; var kills=0; var rep=false; var ki=0; var counter=0; var power='none'; var timel=counter/33
 		var shoots=[]; var enemies=[];
 		function powerup(x4,y4, type){
             this.y4=y4; this.x4=x4; this.type=type; this.exit=true
@@ -207,7 +208,7 @@ function preventEnemyCollisions() {
             }
             this.checkimpact=function(){
             	for(var i=0; i<shoots.length; i++){
-            		if(shoots[i].x1<this.x2+5*s && shoots[i].x1>this.x2-5*s && shoots[i].y1<this.y2+4*s && shoots[i].y1>this.y2-5*s){console.log(this.healths); this.healths-=firepower; shoots[i].x1=undefined; shoots[i].y1=undefined; if(this.healths<0){this.life=false; kills+=1; ki+=1; this.x2=undefined; this.y2=undefined}}
+            		if(shoots[i].x1<this.x2+5*s && shoots[i].x1>this.x2-5*s && shoots[i].y1<this.y2+4*s && shoots[i].y1>this.y2-5*s){this.healths-=firepower; shoots[i].x1=undefined; shoots[i].y1=undefined; if(this.healths<0){this.life=false; kills+=1; ki+=1; this.x2=undefined; this.y2=undefined}}
             	}
             }
             this.enimate=function(){
@@ -373,4 +374,23 @@ function preventEnemyCollisions() {
             aud.loop=true; aud.currentTime=3000
         aud.play(); aud.loop=false}
 		})
+        but1.addEventListener('mousedown', event=>{
+            
+            dy=-s*5; dir=1
+        })
+        but2.addEventListener('mousedown', event=>{
+            dx=-s*5; dir=2
+        })
+        but3.addEventListener('mousedown', event=>{
+            makebullet();
+	var aud=document.getElementById('mousedown')
+	aud.loop=true; aud.currentTime=3000
+aud.play(); aud.loop=false
+        })
+        but4.addEventListener('mousedown', event=>{
+            dx=s*5; dir=4
+        })
+        but5.addEventListener('mousedown', event=>{
+            dy=s*5; dir=3
+        })
 		animate()
