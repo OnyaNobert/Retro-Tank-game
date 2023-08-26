@@ -376,21 +376,21 @@ function preventEnemyCollisions() {
 		})
         but1.addEventListener('mousedown', event=>{
             
-            dy=-s*5; dir=1
+            dy=-s*10; dir=1
         })
         but2.addEventListener('mousedown', event=>{
-            dx=-s*5; dir=2
+            dx=-s*10; dir=2
         })
         but3.addEventListener('mousedown', event=>{
-            makebullet();
+            makebullet(); makebullet();
 	var aud=document.getElementById('sound')
 	aud.loop=true; aud.currentTime=3000
 aud.play(); aud.loop=false
         })
         but4.addEventListener('mousedown', event=>{
-            dx=s*5; dir=4
+            dx=s*10; dir=4
         })
         but5.addEventListener('mousedown', event=>{
-            dy=s*5; dir=3
+            dy=s*10; dir=3
         })
 		animate()
