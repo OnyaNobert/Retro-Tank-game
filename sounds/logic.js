@@ -1,4 +1,3 @@
-var dir=3; 
 var c=document.querySelector('canvas')
 		c.width=600;
 		c.height=600
@@ -7,10 +6,10 @@ var c=document.querySelector('canvas')
 		var tp=0
 		var cor=0
 		var cdown=0
-        var fx; var fy;
-		var powerups=[]
+        var bullconst=0
+		powerups=[]
 		var tothealth=400
-		var s=3; var x=100; var y=100; var dx=0; var dy=0; var health=400; var lives=true; var num=1; var firepower=5; var kills=0; var rep=false; var ki=0; var counter=0; var power='none'; var timel=counter/33
+		var s=3; var x=100; var y=100; var dx=0; var dy=0; var dir=1; var health=400; var lives=true; var num=1; var firepower=5; var kills=0; var rep=false; var ki=0; var counter=0; var power='none'; var timel=counter/33
 		var shoots=[]; var enemies=[];
 		function powerup(x4,y4, type){
             this.y4=y4; this.x4=x4; this.type=type; this.exit=true
@@ -208,7 +207,7 @@ function preventEnemyCollisions() {
             }
             this.checkimpact=function(){
             	for(var i=0; i<shoots.length; i++){
-            		if(shoots[i].x1<this.x2+5*s && shoots[i].x1>this.x2-5*s && shoots[i].y1<this.y2+4*s && shoots[i].y1>this.y2-5*s){this.healths-=firepower; shoots[i].x1=undefined; shoots[i].y1=undefined; if(this.healths<0){this.life=false; kills+=1; ki+=1; this.x2=undefined; this.y2=undefined}}
+            		if(shoots[i].x1<this.x2+5*s && shoots[i].x1>this.x2-5*s && shoots[i].y1<this.y2+4*s && shoots[i].y1>this.y2-5*s){console.log(this.healths); this.healths-=firepower; shoots[i].x1=undefined; shoots[i].y1=undefined; if(this.healths<0){this.life=false; kills+=1; ki+=1; this.x2=undefined; this.y2=undefined}}
             	}
             }
             this.enimate=function(){
@@ -312,6 +311,22 @@ function preventEnemyCollisions() {
 			powerups[i]=new powerup(g,f,typ)
 		}
 		function animate(){
+            
+if(keyheld[0]){dx=-s*1.5; dir=2}
+
+			if(keyheld[1]){dy=s*1.5; dir=3}
+
+			if(keyheld[2]){dx=s*1.5; dir=4}
+
+			if(keyheld[3]){dy=-s*1.5; dir=1}
+
+			if(keyheld[4] && bullconst%3 == 0){makebullet();
+
+            var aud=document.getElementById('sound')
+
+            aud.loop=true; aud.currentTime=3000
+
+        aud.play(); aud.loop=false}
             window.requestAnimationFrame(animate)
             if(lives){can.clearRect(0,0,600,600)
             if(health<100){can.fillStyle='red'}
@@ -326,16 +341,10 @@ function preventEnemyCollisions() {
             }
             //en.enimate()
             powerups[cor].make()
+            bullconst++
             drawplayer()
             firebullets()
-            fx=x; fy=y
             x+=dx; y+=dy
-            if(x+4*s>600 || x-4*s<0){
-                x=fx
-            }
-            if(y+4*s>600 || y-4*s<0){
-                y=fy
-            }
             dx=0; dy=0;
             if(rep){
             	num+=1; for(var i=0; i<num; i++){
@@ -364,33 +373,52 @@ function preventEnemyCollisions() {
             document.getElementById('powers').innerHTML='power up:'+power+', time left:'+ Math.round(timel)+'s'
             
         }}
-		window.addEventListener('keydown', event=>{
-			if(event.key=='a'){dx=-s*5; dir=2}
-			if(event.key=='s'){dy=s*5; dir=3}
-			if(event.key=='d'){dx=s*5; dir=4}
-			if(event.key=='w'){dy=-s*5; dir=1}
-			if(event.key=='l'){makebullet();
-            var aud=document.getElementById('sound')
-            aud.loop=true; aud.currentTime=3000
-        aud.play(); aud.loop=false}
+        var keyheld=[false,false,false,false,false]
+        window.addEventListener('keyup', event=>{
+
+			if(event.key=='a'){keyheld[0]=false}
+			if(event.key=='s'){keyheld[1]=false}
+			if(event.key=='d'){keyheld[2]=false}
+			if(event.key=='w'){keyheld[3]=false}
+			if(event.key=='l'){keyheld[4]=false}
 		})
-        but1.addEventListener('mousedown', event=>{
-            
-            dy=-s*10; dir=1
+		window.addEventListener('keydown', event=>{
+
+			if(event.key=='a'){keyheld[0]=true}
+			if(event.key=='s'){keyheld[1]=true}
+			if(event.key=='d'){keyheld[2]=true}
+			if(event.key=='w'){keyheld[3]=true}
+			if(event.key=='l'){keyheld[4]=true}
+		})
+        
+        but4.addEventListener('touchstart', event=>{
+            keyheld[1]=true
         })
-        but2.addEventListener('mousedown', event=>{
-            dx=-s*10; dir=2
+        but4.addEventListener('touchend', event=>{
+            keyheld[1]=false
         })
-        but3.addEventListener('mousedown', event=>{
-            makebullet(); makebullet();
-	var aud=document.getElementById('sound')
-	aud.loop=true; aud.currentTime=3000
-aud.play(); aud.loop=false
+        but3.addEventListener('touchstart', event=>{
+            keyheld[2]=true
         })
-        but4.addEventListener('mousedown', event=>{
-            dx=s*10; dir=4
+        but3.addEventListener('touchend', event=>{
+            keyheld[2]=false
         })
-        but5.addEventListener('mousedown', event=>{
-            dy=s*10; dir=3
+        but1.addEventListener('touchstart', event=>{
+            keyheld[3]=true
+        })
+        but1.addEventListener('touchend', event=>{
+            keyheld[3]=false
+        })
+        but2.addEventListener('touchstart', event=>{
+            keyheld[0]=true
+        })
+        but2.addEventListener('touchend', event=>{
+            keyheld[0]=false
+        })
+         shot.addEventListener('touchstart', event=>{
+            keyheld[4]=true
+        })
+        shot.addEventListener('touchend', event=>{
+            keyheld[4]=false
         })
 		animate()
